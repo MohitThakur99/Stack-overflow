@@ -1,0 +1,50 @@
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import "./VerifyOtpEmail.css"
+import icon from "../../assets/stack-overflow-brands.svg"
+import { verifyotpemail } from '../../actions/auth'
+
+const VerifyOtpEmail = () => {
+    
+const [email, setEmail] = useState('')
+const [otp,setOtpValue] = useState('')
+
+const dispatch = useDispatch()
+const navigate = useNavigate()
+
+const handleSubmitOtp = (e) => {
+    e.preventDefault();
+    if(!email || !otp){
+      alert('Enter details to continue')
+    } else {
+      dispatch(verifyotpemail({ email, otp }, navigate));
+    }
+}
+
+return (
+<section className='auth-section'>
+  <div className='auth-container-2'>
+    <img src={icon} style={{width: "13px"}} alt="stack overflow" className='login-logo' />  
+
+      <form onSubmit={handleSubmitOtp}>
+        <label htmlFor="email">
+          <div style={{display: "flex", justifyContent: "space-between"}}>
+            <h4>Re-enter Email for verification</h4>
+          </div>
+          <input type="email" name="email" id="email" onChange={(e) => {setEmail(e.target.value)}} />
+        </label>
+        <label htmlFor="otp">
+          <div style={{display: "flex", justifyContent: "space-between"}}>
+            <h4>Enter OTP</h4>
+          </div>
+          <input type="text" name="otp" id="otp" onChange={(e) => {setOtpValue(e.target.value)}} />
+        </label>
+        <button type='submit' className='auth-btn'>Verify Otp</button>
+      </form>
+  </div>
+</section>
+)
+}
+
+export default VerifyOtpEmail
